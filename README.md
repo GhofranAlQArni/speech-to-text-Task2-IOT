@@ -102,4 +102,46 @@ Finally :
 ![Screenshot 2024-07-25 190019](https://github.com/user-attachments/assets/136e57a1-5fac-49a8-8d01-7aabd18f7d6b)
 
 
+# php code
+
+```ruby
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $transcription = $_POST['transcription'];
+
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "speech_to_text";
+
+  
+        $conn = new mysqli($servername, $username, $password, $dbname);
+    
+         // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error); }
+    
+        // Prepare and bind the statement
+        $stmt = $conn->prepare("INSERT INTO speech_text (text) VALUES ($transcription)");
+        $stmt->bind_param("s", $transcription);
+    
+        // Execute the statement
+        if ($stmt->execute()) {
+            echo "Transcription stored successfully";
+        } else {
+            echo "Error storing transcription: " . $stmt->error;
+        }
+    
+        $stmt->close();
+        $conn->close();
+    }
+
+    
+$conn->close();
+header("Location: ghhh.php");
+exit();
+?>
+```
+# to STORE in database
+
 (Helpful source: https://www.youtube.com/watch?v=-k-PgvbktX4)
